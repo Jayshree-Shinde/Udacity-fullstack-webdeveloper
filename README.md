@@ -17,11 +17,11 @@ Port : 22
 2. Create a new folder on your computer where you’ll store your work.
 3. cd into that folder within your terminal.
 4. Tell Vagrant what kind of Linux virtual machine you would like to run.
-   Run : $ vagrant init ubuntu/trusty64
+   -Run : $ vagrant init ubuntu/trusty64
 5. Start the virtual machine
-   Run : $ Vagrant up
-   Run : $ Vagrant provision
-   Run : $ Vagrant ssh
+   -Run : $ Vagrant up
+   -Run : $ Vagrant provision
+   -Run : $ Vagrant ssh
 6. You would now be logged in as vagrant user.
 
 ### III. Secure your server instance
