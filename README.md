@@ -7,9 +7,9 @@
 3. Once the instance is up, ssh into your instance.
 4. You would now be logged in to your instance as ubuntu user.
 ### Amazon Lightsail instance details
-Instance Name : Ubuntu-4
-Public IP : 13.235.9.217
-Port : 22
+- Instance Name : Ubuntu-4
+- Public IP : 13.235.9.217
+- Port : 22
 
 ### II. Set up your local machine environment
 ### Steps :
