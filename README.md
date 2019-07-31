@@ -106,3 +106,63 @@
 3. Run : $ sudo git clone https://github.com/Jayshree-Shinde/fullstack-nanodegree-vm catalog
 4. Run : $ sudo chown -R ubuntu:ubuntu catalog/
 5. Copy and paste contents of downloaded client_scretes.json to the file with same name under directory        /var/www/catalog/catalog/client_secrets.json
+   Run : $ sudo touch client_secrets.json
+   Run : $ sudo nano client_secrets.json
+ 
+ ### VIII. Install other required packages
+ ### Steps :
+ 1. Run : $ sudo apt-get install python-psycopg2 python-flask
+ 2. Run : $ sudo apt-get install python-sqlalchemy python-pip
+ 3. Run : $ sudo pip install --upgrade pip
+ 4. Run : $ sudo pip install oauth2client
+ 5. Run : $ sudo pip install requests
+ 
+ ### IX. Setup a virtual host
+ ### Steps :
+ 1. Run : $ sudo touch /etc/apache2/sites-available/catalog.conf
+ 2. Run : $ sudo nano /etc/apache2/sites-available/catalog.conf and add the following
+   ```
+   <VirtualHost *:80>
+		ServerName 13.235.9.217
+		ServerAdmin admin@13.235.9.217
+		WSGIScriptAlias / /var/www/catalog.wsgi
+		<Directory /var/www/catalog/>
+			Order allow,deny
+			Allow from all
+			Options -Indexes
+		</Directory>
+		Alias /static /var/www/catalog/static
+		<Directory /var/www/catalog/static/>
+			Order allow,deny
+			Allow from all
+			Options -Indexes
+		</Directory>
+		ErrorLog ${APACHE_LOG_DIR}/error.log
+		LogLevel warn
+		CustomLog ${APACHE_LOG_DIR}/access.log combined
+   </VirtualHost>
+   ```
+ 3. Run : $ sudo a2ensite catalog
+ 4. Run : $ udo touch /var/www/catalog/catalog.wsgi and add the following
+  ```
+  #!/usr/bin/python
+   import sys
+   import logging
+   logging.basicConfig(stream=sys.stderr)
+   sys.path.insert(0,"/var/www/catalog/")
+   sys.path.insert(1,"/var/www/catalog/catalog")
+
+   from catalog import app as application
+   application.secret_key = 'super_secret_key'
+   ```
+  5. Run : $ sudo nano Project2_databaseSetup.py and replace the below line
+    engine = create_engine('sqlite:///catalogapp.db')
+    with
+    engine = create_engine ('postgresql://catalog:catalog@localhost/catalog')
+  6. Run : sudo nano Catalog.py
+    Replace the below line
+    app.run(host='0.0.0.0', port=5000)
+    with
+    app.run()
+  7. Run : $ sudo python Catalog.py
+  
