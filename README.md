@@ -41,9 +41,31 @@ Port : 22
    Run : $ sudo sudo ufw status\
    Now, it would be in active status.
 3. Change SSH port from 22 to 2200 : Edit the file /etc/ssh/sshd_config by the following command.
+   Run : $ sudo nano /etc/ssh/sshd_config
+   Edit the line :
+   '# What ports, IPs and protocols we listen for
+    Port 22' to 2200
+    Run : $ sudo ufw deny 22
+ 
+ ### IV. Generating key pairs and installing a public key to force key based authentication for secure remote login.
+ ### Steps :
+ 1. Run : $ ssh-keygen in your local machine to generate public/private rsa key pair.
+ 2. Enter file in which you want to save the key: /home/vagrant/.ssh/linuxCourse.
+ 3. Enter paasphrase: empty in this case.
+ 4. Once the keypair is generated, copy the content of linuxCourse.pub 
+    Run : $ cat .ssh/linuxCourse.pub
+ 5. Now login to your server instance.
+    Run : $ mkdir .ssh
+    Run : $ touch .ssh/authorized_keys to create a file to store the public key
+    Run : $ nano .ssh/authorized_keys and paste the copied content and save the changes
+ 6. Setup some specefic file permissions.
+    Run : chmod 700 .ssh
+    Run : chmod 644 .ssh/authorized_keys
+ 7. Now remotely login to your server from your local machine.
+    SSH into your instance : $ ssh ubuntu@13.235.9.217 -i -p 22 ~/.ssh/linuxCourse 
    
    
 ### III. Log into your server instance
 ### Steps :
-1. SSH into your instance : $ ssh ubuntu@13.235.9.217 -i -p 22 ~/.ssh/linuxCourse
+1. 
 
