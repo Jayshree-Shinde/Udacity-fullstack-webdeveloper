@@ -117,7 +117,7 @@
  4. Run : $ sudo pip install oauth2client
  5. Run : $ sudo pip install requests
  
- ### IX. Setup a virtual host
+ ### IX. Setup a virtual host and run the final application
  ### Steps :
  1. Run : $ sudo touch /etc/apache2/sites-available/catalog.conf
  2. Run : $ sudo nano /etc/apache2/sites-available/catalog.conf and add the following
