@@ -35,10 +35,8 @@
    - Run : $ sudo /etc/apt/apt.conf.d/20auto-upgrades
      and add the below lines so that the upgrades are downloaded and installed every day.
      ```
-     	APT::Periodic::Update-Package-Lists "1";
-	APT::Periodic::Download-Upgradeable-Packages "1";
-	APT::Periodic::AutocleanInterval "7";
-	APT::Periodic::Unattended-Upgrade "1";```
+     	APT::Periodic::Update-Package-Lists "1";APT::Periodic::Download-Upgradeable-Packages "1";APT::Periodic::AutocleanInterval "7"; APT::Periodic::Unattended-Upgrade "1";
+	
     - Run : $ sudo dpkg-reconfigure --priority=low unattended-upgrades to enable automatic upgrades
     - Run : $ sudo service apache2 restart
 2. Configure the uncomplicated firewall.
