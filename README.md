@@ -7,8 +7,8 @@
 3. Once the instance is up, ssh into your instance.
 4. You would now be logged in to your instance as ubuntu user.
 ### Amazon Lightsail instance details
-- Instance Name : Ubuntu-4
-- Public IP : 13.235.9.217
+- Instance Name : Ubuntu-5
+- Public IP : 13.235.94.112
 - Port : 22
 
 ### II. Set up your local machine environment
@@ -24,11 +24,24 @@
    - Run : $ Vagrant ssh
 6. You would now be logged in as vagrant user.
 
-### III. Secure your server instance
+### III. Secure your server instance and automatically install updates
 ### Steps :
 1. Update all currently installed packages.
    - Run : $ sudo apt-get update
    - Run : $ sudo apt-get upgrade
+   - Run : $ sudo apt-get install unattended-upgrades
+   - Run : $ sudo nano /etc/apt/apt.conf.d/50unattended-upgrades
+     and uncomment the line ${distro_id}:${distro_codename}-updates and save it
+   - Run : $ sudo /etc/apt/apt.conf.d/20auto-upgrades
+     and add the below lines so that the upgrades are downloaded and installed every day.
+     ```
+     	APT::Periodic::Update-Package-Lists "1";
+	APT::Periodic::Download-Upgradeable-Packages "1";
+	APT::Periodic::AutocleanInterval "7";
+	APT::Periodic::Unattended-Upgrade "1";
+     ```
+    - Run : $ sudo dpkg-reconfigure --priority=low unattended-upgrades to enable automatic upgrades
+    - Run : $ sudo service apache2 restart
 2. Configure the uncomplicated firewall.
    - Run : $ sudo ufw status
    It would currently show inactive.
@@ -38,7 +51,7 @@
    - Run : $ sudo ufw allow www
    - Run : $ sudo sudo ufw allow 123
    - Run : $ sudo ufw enable
-   - Run : $ sudo sudo ufw status\
+   - Run : $ sudo sudo ufw status
    Now, it would be in active status.
 3. Change SSH port from 22 to 2200 : Edit the file /etc/ssh/sshd_config by the following command.
    - Run : $ sudo nano /etc/ssh/sshd_config
@@ -47,24 +60,7 @@
     Port 22' to 2200
     - Run : $ sudo ufw deny 22
  
- ### IV. Generating key pairs and installing a public key to force key based authentication for secure remote login.
- ### Steps :
- 1. Run : $ ssh-keygen in your local machine to generate public/private rsa key pair.
- 2. Enter file in which you want to save the key: /home/vagrant/.ssh/linuxCourse.
- 3. Enter paasphrase: empty in this case.
- 4. Once the keypair is generated, copy the content of linuxCourse.pub 
-    - Run : $ cat .ssh/linuxCourse.pub
- 5. Now login to your server instance.
-    - Run : $ mkdir .ssh
-    - Run : $ touch .ssh/authorized_keys to create a file to store the public key
-    - Run : $ nano .ssh/authorized_keys and paste the copied content and save the changes
- 6. Setup some specefic file permissions.
-    - Run : chmod 700 .ssh
-    - Run : chmod 644 .ssh/authorized_keys
- 7. Now remotely login to your server from your local machine.
-    SSH into your instance : $ ssh ubuntu@13.235.9.217 -i -p 22 ~/.ssh/linuxCourse 
-   
-### III. Create user grader and give sudo access
+### IV. Create user grader and give sudo access
 ### Steps :
 1. Run : $ sudo adduser grader (password : grader)
 2. Run : $ sudo ls /etc/sudoers.d to check the sudoers list.
@@ -72,18 +68,43 @@
     '# CLOUD_IMG: This file was created/modified by the Cloud Image build process
     grader ALL=(ALL) NOPASSWD:ALL'
     Save the file and exit.
-4. Run : $ su - grader to switch to grader user.
-
-### IV. Configure time zone
+ 4. Run : $ su - grader to switch to grader user.
+ 
+ ### V. Generating key pairs and installing a public key to force key based authentication for secure remote login.
+ ### Steps :
+ 1. Run : $ ssh-keygen in your local machine to generate public/private rsa key pair.
+ 2. Enter file in which you want to save the key: /home/vagrant/.ssh/graderCourse.
+ 3. Enter paasphrase: empty in this case.You will see the following message
+    Your identification has been saved in /home/vagrant/.ssh/graderCourse.
+    Your public key has been saved in /home/vagrant/.ssh/graderCourse.pub.
+ 4. Once the keypair is generated, copy the content of linuxCourse.pub 
+    - Run : $ cat .ssh/graderCourse.pub
+ 5. Now login to your server instance as user grader.
+    - Run : $ mkdir .ssh
+    - Run : $ touch .ssh/authorized_keys to create a file to store the public key
+    - Run : $ nano .ssh/authorized_keys and paste the copied content and save the changes
+ 6. Setup some specefic file permissions.
+    - Run : sudo chmod 700 .ssh
+    - Run : sudo chmod 644 .ssh/authorized_keys
+    - Run : sudo chown -R grader .ssh
+    - Run : sudo chgrp -R grader .ssh
+ 7. Now remotely login to your server from your local machine.
+    SSH into your instance : $ ssh -i ~/.ssh/graderCourse grader@13.235.94.112 
+ 8. Configure SSH (restrict root login and set password)
+    - Run : sudo nano /etc/ssh/sshd_config
+    Set PasswordAuthentication no
+    Set PermitRootLogin no
+    
+### VI. Configure time zone
 1. Run : $ sudo timedatectl set-timezone UTC
 
-### V. Install Apache
+### VII. Install Apache
 ### Steps :
 1. Run : $ sudo apt-get install apache2
 2. Run : $ sudo apt-get install libapache2-mod-wsgi-py3
-3. Go to http://13.235.9.217/, Ubuntu Default Page will show up.
+3. Go to http://13.235.94.112/, Ubuntu Default Page will show up.
 
-### VI. Install and configure postgresql
+### VIII. Install and configure postgresql
 ### Steps :
 1. Run : $ sudo apt-get install postgresql
 2. Run : $ sudo su - postgre
@@ -99,7 +120,7 @@
 9. Run : $ sudo su - catalog
 10.Run : $ createdb catalog and exit
 
-### VII. Install git and clone git repository that contains the Catalogapp (ItemCatalog Project)
+### IX. Install git and clone git repository that contains the Catalogapp (ItemCatalog Project)
 ### Steps :
 1. Run : $ sudo apt-get install git
 2. Run : $ sudo mkdir /var/www/catalog
