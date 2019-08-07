@@ -185,5 +185,5 @@
     app.run(host='0.0.0.0', port=5000)
     with
     app.run()
-  7. Run : $ sudo python Catalog.py
+  7. Run : $ sudo python __init__.py
   
