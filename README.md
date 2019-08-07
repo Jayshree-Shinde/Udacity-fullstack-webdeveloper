@@ -126,6 +126,9 @@
 5. Copy and paste contents of downloaded client_scretes.json to the file with same name under directory        /var/www/catalog/catalog/client_secrets.json
    Run : $ sudo touch client_secrets.json
    Run : $ sudo nano client_secrets.json
+ 6. Change file project.py to init.py: 
+    - Run : $ sudo mv Catalog.py __init__.py
+
  
  ### VIII. Install other required packages
  ### Steps :
