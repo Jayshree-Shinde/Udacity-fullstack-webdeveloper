@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import sqlalchemy
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from Project2_databaseSetup import Base, Category, Item, Users
@@ -17,7 +18,7 @@ from flask import Flask, render_template, request, \
 app = Flask(__name__)
 
 CLIENT_ID = json.loads(
-    open('client_secret.json', 'r').read())['web']['client_id']
+    open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Sports Catalog App"
 
 
