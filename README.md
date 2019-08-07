@@ -121,7 +121,7 @@
 ### Steps :
 1. Run : $ sudo apt-get install git
 2. Run : $ sudo mkdir /var/www/catalog
-3. Run : $ sudo git clone https://github.com/Jayshree-Shinde/fullstack-nanodegree-vm catalog
+3. Run : $ sudo git clone https://github.com/Jayshree-Shinde/Udacity-fullstack-webdeveloper catalog
 4. Run : $ sudo chown -R ubuntu:ubuntu catalog/
 5. Copy and paste contents of downloaded client_scretes.json to the file with same name under directory        /var/www/catalog/catalog/client_secrets.json
    Run : $ sudo touch client_secrets.json
